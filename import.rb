@@ -1,5 +1,4 @@
 # Use this file to import the sales information into the the database.
-require "pry"
 require "csv"
 require "pg"
 
@@ -14,8 +13,8 @@ end
 
 sales_data = CSV.readlines('sales.csv', headers: true)
 
-sales_data.each do |row|
-  db_connection do |conn|
+db_connection do |conn|
+  sales_data.each do |row|
 
     product_match = conn.exec_params("SELECT * FROM product WHERE product_name = $1", [row["product_name"]] )
     if product_match.count < 1
